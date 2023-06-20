@@ -3,12 +3,7 @@ package com.rafaeldeluca.movie.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="tb_movie")
@@ -24,7 +19,11 @@ public class Movie {
 	
 	@OneToMany(mappedBy = "id.movie")
 	private Set<Score> scores = new HashSet<>();
-	
+
+	@ManyToOne
+	@JoinColumn(name="genre_id")
+	private Genre genre;
+
 	public Movie() {
 		
 	}
@@ -38,7 +37,14 @@ public class Movie {
 		this.image = image;
 	}
 
-
+	public Movie(Long id, String title, Double score, Integer count, String image, Genre genre) {
+		this.id = id;
+		this.title = title;
+		this.score = score;
+		this.count = count;
+		this.image = image;
+		this.genre = genre;
+	}
 
 	public Long getId() {
 		return id;
@@ -84,10 +90,16 @@ public class Movie {
 	// um filme pode ter várias avaliações
 	//id = chave do score
 	//movie = atributo do ScorePK
-	
-	
-	@OneToMany(mappedBy = "id.movie")
+
 	public Set<Score> getScores() {
 		return scores;
+	}
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
 	}
 }

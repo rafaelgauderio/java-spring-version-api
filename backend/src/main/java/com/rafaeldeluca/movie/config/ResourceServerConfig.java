@@ -28,7 +28,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     // endpoint public a todos para poder logar
     private static final String[] PUBLIC = {"/h2-console/**", "/oauth/token"};
 
-    private static final String[] ALL_USERS_GET_METHOD = {"/movies/**"};
+    private static final String[] ALL_USERS_GET_METHOD = {"/movies/**", "/v1/movies/**"};
 
     private static final String[] ALL_USERS_PUT_METHOD = {"/scores/**"};
 

@@ -1,5 +1,8 @@
 package com.rafaeldeluca.movie.services;
 
+import com.rafaeldeluca.movie.entities.dto.MovieDTO;
+import com.rafaeldeluca.movie.entities.dto.MovieGenreDTO;
+import com.rafaeldeluca.movie.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,8 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rafaeldeluca.movie.entities.Movie;
-import com.rafaeldeluca.movie.entities.dto.MovieDTO;
-import com.rafaeldeluca.movie.repositories.MovieRepository;
+
 
 // Regras de negócio ficam na camada de serviço
 //Anotacao Service registra o MovieService como componente do sistema
@@ -22,19 +24,33 @@ public class MovieService {
 	//argumento para buscar paginado e não tudo tudo de uma vez do database
 	@Transactional(readOnly = true)
 	public Page<MovieDTO> findAll(Pageable pageable) {
-		
 		Page<Movie> result = repository.findAll(pageable);
 		Page<MovieDTO> page = result.map(x -> new MovieDTO(x));
 		return page;		
 		
 	}
-	
+
+	@Transactional(readOnly = true)
+	public Page<MovieGenreDTO> findAllWithGenre(Pageable pageable) {
+		Page<Movie> result = repository.findAll(pageable);
+		Page<MovieGenreDTO> page = result.map(x-> new MovieGenreDTO(x));
+		return page;
+	}
+
 	@Transactional(readOnly = true)
 	public MovieDTO findById(Long id) {
 		Movie result = repository.findById(id).get();
 		MovieDTO dto = new MovieDTO(result);
 		return dto;
 		
+	}
+
+	@Transactional(readOnly = true)
+	public MovieGenreDTO findByIdWithGenre(Long id) {
+		Movie result = repository.findById(id).get();
+		MovieGenreDTO dto = new MovieGenreDTO(result);
+		return dto;
+
 	}
 
 	@Transactional(readOnly=false)
@@ -63,5 +79,6 @@ public class MovieService {
 	public void delete (Long id) {
 		repository.deleteById(id);
 	}
+
 
 }

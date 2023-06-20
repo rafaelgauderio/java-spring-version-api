@@ -32,10 +32,10 @@ public class MovieControllerV1 {
 	}
 
 	@PostMapping
-	public ResponseEntity<MovieDTO> insert(@RequestBody MovieDTO movieDTO) {
-		movieDTO = service.insert(movieDTO);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(movieDTO.getId()).toUri();
-		return ResponseEntity.created(uri).body(movieDTO);
+	public ResponseEntity<MovieGenreDTO> insert(@RequestBody MovieGenreDTO movieGenreDTO) {
+		movieGenreDTO = service.insertWithGenre(movieGenreDTO);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(movieGenreDTO.getId()).toUri();
+		return ResponseEntity.created(uri).body(movieGenreDTO);
 	}
 
 	@PutMapping(value = "/{id}")

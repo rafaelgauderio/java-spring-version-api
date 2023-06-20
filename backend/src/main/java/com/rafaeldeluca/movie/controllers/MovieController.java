@@ -1,6 +1,7 @@
 package com.rafaeldeluca.movie.controllers;
 
 import com.rafaeldeluca.movie.entities.dto.MovieDTO;
+import com.rafaeldeluca.movie.entities.dto.MovieGenreDTO;
 import com.rafaeldeluca.movie.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,10 +26,20 @@ public class MovieController {
 	public Page<MovieDTO> findAll(Pageable pageable) {
 		return service.findAll(pageable);
 	}
+
+	@GetMapping(produces = "application/vdn.rafaeldeluca.movie-v1+json")
+	public Page<MovieGenreDTO> findAllV1WithGenre(Pageable pageable) {
+		return service.findAllWithGenre(pageable);
+	}
 	
 	@GetMapping(value = "/{id}")
 	public MovieDTO findById(@PathVariable Long id) {
 		return service.findById(id);
+	}
+
+	@GetMapping(value = "/{id}", produces="application/vdn.rafaeldeluca.movie-v1+json")
+	public MovieGenreDTO findByIdV1WithGenre(@PathVariable Long id) {
+		return service.findByIdWithGenre(id);
 	}
 
 	@PostMapping

@@ -60,6 +60,13 @@ public class MovieService {
 		return new MovieDTO(entity);
 	}
 
+	@Transactional(readOnly = false)
+	public MovieGenreDTO insertWithGenre(MovieGenreDTO dto) {
+		Movie entity = dto.dtoToEntity();
+		entity = repository.save(entity);
+		return new MovieGenreDTO(entity);
+	}
+
 	@Transactional(readOnly=false)
 	public MovieDTO update(MovieDTO dto, Long id) {
 		//Movie entity = repository.getReferenceById(id);
@@ -79,6 +86,7 @@ public class MovieService {
 	public void delete (Long id) {
 		repository.deleteById(id);
 	}
+
 
 
 }
